@@ -27,11 +27,22 @@ public class RegionsEnteredEvent extends Event implements Cancellable {
 	
 	private final UUID uuid;
 	private final Set<ProtectedRegion> regions;
+	private final Set<String> regionsNames;
 	
 	public RegionsEnteredEvent(UUID playerUUID, @Nullable Set<ProtectedRegion> regions)
 	{
 		this.uuid = playerUUID;
-		this.regions = regions==null?new HashSet<>():regions;
+		this.regionsNames = new HashSet<>();
+		this.regions = new HashSet<>();
+		
+		if(regions != null)
+		{
+			this.regions.addAll(regions);
+			for(ProtectedRegion region : regions)
+			{
+				this.regionsNames.add(region.getId());
+			}
+		}
 	}
 
 	@Contract (pure = true)
@@ -56,6 +67,11 @@ public class RegionsEnteredEvent extends Event implements Cancellable {
 	@NotNull
 	public Set<ProtectedRegion> getRegions() {
 		return regions;
+	}
+	
+	@NotNull
+	public Set<String> getRegionsNames() {
+		return regionsNames;
 	}
 	
 	@Override

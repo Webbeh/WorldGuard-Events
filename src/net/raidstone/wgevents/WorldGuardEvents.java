@@ -1,14 +1,8 @@
 package net.raidstone.wgevents;
 
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * @author weby@we-bb.com [Nicolas Glassey]
@@ -35,16 +29,5 @@ public class WorldGuardEvents extends JavaPlugin implements Listener {
         }
         listeners = new Listeners();
         Bukkit.getPluginManager().registerEvents(listeners, this);
-    }
-    
-    @NotNull
-    public Set<ProtectedRegion> getRegionsFromPlayer(UUID u)
-    {
-        return listeners==null?new HashSet<>():listeners.getPlayerRegions(u);
-    }
-    @NotNull
-    public Set<String> getRegionsNamesFromPlayer(UUID u)
-    {
-        return listeners==null?new HashSet<>():listeners.getPlayerRegionsNames(u);
     }
 }

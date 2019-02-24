@@ -31,8 +31,8 @@
     </build>
     <licenses>
         <license>
-            <name>NO-ware</name>
-            <url>https://raidstone.net/no-ware.txt</url>
+            <name>Beerware</name>
+            <url>https://raidstone.net/beerware.txt</url>
             <distribution>repo</distribution>
         </license>
     </licenses>

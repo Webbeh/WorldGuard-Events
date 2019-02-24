@@ -100,10 +100,6 @@ public class Listeners implements Listener {
     
         //Apply the changes
         playerRegions.put(u, actual);
-        StringBuilder s = new StringBuilder("Applicable : ");
-        for(ProtectedRegion pr : playerRegions.get(u))
-            s.append(pr.getId()).append(", ");
-        Bukkit.broadcastMessage(s.toString());
     }
     
     private void quit(UUID u)
@@ -163,23 +159,5 @@ public class Listeners implements Listener {
          */
         
         changeRegions(uuid, getRegions(uuid));
-    }
-    
-    Set<String> getPlayerRegionsNames(UUID u) {
-        Set<String> reg = new HashSet<>();
-        for (ProtectedRegion pr : getPlayerRegions(u))
-            reg.add(pr.getId());
-    
-        return reg;
-    }
-    
-    Set<ProtectedRegion> getPlayerRegions(UUID u) {
-        if(!playerRegions.containsKey(u))
-            return new HashSet<>();
-        
-        Set<ProtectedRegion> regions = playerRegions.get(u);
-        if(regions==null) return new HashSet<>();
-        
-        return regions;
     }
 }
