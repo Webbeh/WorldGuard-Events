@@ -16,20 +16,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 
 import java.util.*;
 
 /**
  * @author weby@we-bb.com [Nicolas Glassey]
- * @version 1.0.0
  * @since 2/24/19
  */
 public class Listeners implements Listener {
     private RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
     
     private HashMap<UUID, Set<ProtectedRegion>> playerRegions = new HashMap<>();
-  
+    
     private Set<ProtectedRegion> getRegions(UUID u)
     {
         Player p = Bukkit.getPlayer(u);
@@ -46,7 +46,6 @@ public class Listeners implements Listener {
         return ars.getRegions();
     }
     
-    private int count=0;
     private void changeRegions(UUID u, Set<ProtectedRegion> actual)
     {
         
@@ -132,7 +131,19 @@ public class Listeners implements Listener {
         quit(event.getPlayer().getUniqueId());
     }
     
-
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent event)
+    {
+        UUID uuid = event.getPlayer().getUniqueId();
+        changeRegions(uuid, getRegions(uuid));
+    }
+    
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event)
+    {
+        quit(event.getEntity().getUniqueId());
+    }
+    
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event)
     {
@@ -143,21 +154,6 @@ public class Listeners implements Listener {
     public void onPlayerMove(PlayerMoveEvent event)
     {
         UUID uuid = event.getPlayer().getUniqueId();
-        /*
-        Location to = BukkitAdapter.adapt(event.getTo());
-        World tow = BukkitAdapter.adapt(event.getTo().getWorld());
-        Location from = BukkitAdapter.adapt(event.getFrom());
-        World fromw = BukkitAdapter.adapt(event.getFrom().getWorld());
-       
-        
-        //World change, clear regions the player's in.
-        if(!tow.equals(fromw))
-        {
-            changeWorld(uuid);
-            return;
-        }
-         */
-        
         changeRegions(uuid, getRegions(uuid));
     }
 }

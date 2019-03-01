@@ -5,7 +5,7 @@
 
     <groupId>net.raidstone</groupId>
     <artifactId>WorldGuardEvents</artifactId>
-    <version>1.13.2-0</version>
+    <version>1.13.2-R0.1</version>
 
     <developers>
         <developer>
