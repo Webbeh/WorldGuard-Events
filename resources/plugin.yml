@@ -1,6 +1,6 @@
 name: "WorldGuardEvents"
 description: Provides other plugins with valuable events concerning WorldGuard regions.
-version: 1.13.2-R0.2
+version: 1.14.4-R0
 api-version: 1.13
 main: net.raidstone.wgevents.WorldGuardEvents
 author: Weby

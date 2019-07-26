@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * @author weby@we-bb.com [Nicolas Glassey]
- * @version 1.13.2-0
+ * @version 1.14.4-R0
  * @since 2/24/19
  */
 public class WorldGuardEvents extends JavaPlugin implements Listener {
@@ -21,7 +21,7 @@ public class WorldGuardEvents extends JavaPlugin implements Listener {
             return;
         }
         
-        if(!version.startsWith("7.0.0"))
+        if(!version.startsWith("7.0."))
         {
             Bukkit.getLogger().warning("[WorldGuardEvents] Detected WorldGuard version \"" + version + "\".");
             Bukkit.getLogger().warning("[WorldGuardEvents] This plugin is meant to work with WorldGuard version \"7.0.0-beta-03;e51a220\" or higher,");
