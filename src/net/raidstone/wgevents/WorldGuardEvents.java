@@ -1,5 +1,6 @@
 package net.raidstone.wgevents;
 
+import com.sk89q.worldguard.WorldGuard;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,6 +29,12 @@ public class WorldGuardEvents extends JavaPlugin implements Listener {
             Bukkit.getLogger().warning("[WorldGuardEvents] Please update WorldGuard if your version is below \"7.0.0-beta-03;e51a220\".");
         }
         listeners = new Listeners();
+        Entry.setListeners(listeners);
         Bukkit.getPluginManager().registerEvents(listeners, this);
+        if(!WorldGuard.getInstance().getPlatform().getSessionManager().registerHandler(Entry.factory, null)) {
+            Bukkit.getLogger().severe("[WorldGuardEvents] Could not register the entry handler !");
+            Bukkit.getLogger().severe("[WorldGuardEvents] Please report this error. The plugin will now be disabled.");
+        }
+        
     }
 }

@@ -33,11 +33,11 @@ public class Listeners implements Listener {
     private Set<ProtectedRegion> getRegions(UUID u)
     {
         Player p = Bukkit.getPlayer(u);
-       
+    
         //If player is offline
-        if(p==null)
+        if (p == null)
             return new HashSet<>();
-      
+    
         Location l = BukkitAdapter.adapt(p.getLocation());
         World w = BukkitAdapter.adapt(p.getLocation().getWorld());
         
@@ -46,52 +46,50 @@ public class Listeners implements Listener {
         return ars.getRegions();
     }
     
-    private void changeRegions(UUID u, Set<ProtectedRegion> actual)
+    void changeRegions(UUID u, Set<ProtectedRegion> actual)
     {
-        
+    
         playerRegions.putIfAbsent(u, new HashSet<>());
         //If the sets contain the same info, ignore.
         int previousSize = playerRegions.get(u).size();
         int actualSize = actual.size();
-        
-        if(actual.size()==playerRegions.get(u).size() && actual.containsAll(playerRegions.get(u)))
+    
+        if (actual.size() == playerRegions.get(u).size() && actual.containsAll(playerRegions.get(u)))
             return;
-       
+    
         Set<ProtectedRegion> previous = playerRegions.get(u);
-       
+    
         boolean joined = false;
         boolean left = false;
-       
+    
         //Check if we joined and/or left a region.
-        if(actualSize==previousSize)
-        {
-            joined=true;
-            left=true;
-        }
-        else if (actualSize<previousSize)
-            left=true;
+        if (actualSize == previousSize) {
+            joined = true;
+            left = true;
+        } else if (actualSize < previousSize)
+            left = true;
         else
-            joined=true;
-        
-        if(left) {
+            joined = true;
+    
+        if (left) {
             //If we left a region
             Set<ProtectedRegion> leftregions = new HashSet<>(previous);
             leftregions.removeAll(actual);
             RegionsLeftEvent rle = new RegionsLeftEvent(u, leftregions);
             Bukkit.getPluginManager().callEvent(rle);
-            for(ProtectedRegion region : leftregions) {
+            for (ProtectedRegion region : leftregions) {
                 RegionLeftEvent re = new RegionLeftEvent(u, region);
                 Bukkit.getPluginManager().callEvent(re);
             }
         }
-        
-        if(joined) {
+    
+        if (joined) {
             //If we entered a region
             Set<ProtectedRegion> enteredregions = new HashSet<>(actual);
             enteredregions.removeAll(previous);
             RegionsEnteredEvent ree = new RegionsEnteredEvent(u, enteredregions);
             Bukkit.getPluginManager().callEvent(ree);
-            for(ProtectedRegion region : enteredregions) {
+            for (ProtectedRegion region : enteredregions) {
                 RegionEnteredEvent re = new RegionEnteredEvent(u, region);
                 Bukkit.getPluginManager().callEvent(re);
             }
@@ -148,12 +146,5 @@ public class Listeners implements Listener {
     public void onWorldChange(PlayerChangedWorldEvent event)
     {
         changeWorld(event.getPlayer().getUniqueId());
-    }
-    
-    @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event)
-    {
-        UUID uuid = event.getPlayer().getUniqueId();
-        changeRegions(uuid, getRegions(uuid));
     }
 }
