@@ -1,0 +1,10 @@
+target/
+target/*
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+out/*
+.idea_modules/
+.idea_modules/*

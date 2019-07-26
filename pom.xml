@@ -7,12 +7,32 @@
     <artifactId>WorldGuardEvents</artifactId>
     <version>1.14.4-R0</version>
 
+    <name>WorldGuard Events</name>
+    <description>Plugin that fires events when a player enters or leaves a WorldGuard area.</description>
+
+    <url>https://github.com/Webbeh/WorldGuard-Events</url>
+    <scm>
+        <connection>scm:git:git://github.com/Webbeh/WorldGuard-Events.git</connection>
+        <developerConnection>scm:git:git@github.com:Webbeh/WorldGuard-Events.git</developerConnection>
+        <url>https://github.com/Webbeh/WorldGuard-Events/tree/master</url>
+    </scm>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <developers>
         <developer>
             <id>Weby</id>
             <name>Glassey Nicolas</name>
             <email>weby@raidstone.net</email>
-            <url>https://geeq.ch</url>
+            <url>https://raidstone.net</url>
         </developer>
     </developers>
     <build>
@@ -20,13 +40,56 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.8.1</version>
                 <configuration>
-                    <release>11</release>
-                    <source>1.9</source>
-                    <target>1.9</target>
+                    <release>10</release>
+                    <source>1.10</source>
+                    <target>1.10</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+                <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.5</version>
+      <executions>
+        <execution>
+          <id>sign-artifacts</id>
+          <phase>verify</phase>
+          <goals>
+            <goal>sign</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
         </plugins>
     </build>
     <licenses>
@@ -78,4 +141,5 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
 </project>

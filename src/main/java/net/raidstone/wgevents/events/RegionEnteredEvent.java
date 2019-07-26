@@ -26,6 +26,13 @@ public class RegionEnteredEvent extends Event implements Cancellable {
     private final ProtectedRegion region;
     private final String regionName;
     
+    /**
+     * This even is fired whenever a region is entered.
+     * It may be fired multiple times per tick, if several
+     * regions are entered at the same time.
+     * @param playerUUID The UUID of the player entering the region.
+     * @param region WorldGuard's ProtectedRegion region.
+     */
     public RegionEnteredEvent(UUID playerUUID, @NotNull ProtectedRegion region)
     {
         this.uuid = playerUUID;
