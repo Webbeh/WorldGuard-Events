@@ -56,7 +56,7 @@ This plugin is located in the Maven Central repository, so you simply need to ad
 ```xml
 <dependency>
     <groupId>net.raidstone</groupId>
-    <artifactId>WorldGuard-Events</artifactId>
+    <artifactId>WorldGuardEvents</artifactId>
     <version>1.14.4-R0</version>
     <scope>provided</scope>
 </dependency>
