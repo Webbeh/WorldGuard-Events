@@ -5,7 +5,7 @@
 
     <groupId>net.raidstone</groupId>
     <artifactId>WorldGuardEvents</artifactId>
-    <version>1.14.4-R0</version>
+    <version>1.14.4-R1</version>
 
     <name>WorldGuard Events</name>
     <description>Plugin that fires events when a player enters or leaves a WorldGuard area.</description>
@@ -36,6 +36,15 @@
         </developer>
     </developers>
     <build>
+        <defaultGoal>clean package install</defaultGoal>
+        <finalName>WorldGuardEvents-${project.version}</finalName>
+        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
