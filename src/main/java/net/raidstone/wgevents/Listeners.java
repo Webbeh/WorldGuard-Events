@@ -2,7 +2,6 @@ package net.raidstone.wgevents;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.util.Location;
-import com.sk89q.worldedit.world.World;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
@@ -19,7 +18,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author weby@we-bb.com [Nicolas Glassey]
@@ -30,6 +32,17 @@ public class Listeners implements Listener {
     
     private HashMap<UUID, Set<ProtectedRegion>> playerRegions = new HashMap<>();
     
+    public  HashMap<UUID, Set<ProtectedRegion>> getPlayerRegions()
+    {
+        return playerRegions;
+    }
+    
+    public Set<ProtectedRegion> getPlayerRegions(UUID uuid)
+    {
+        playerRegions.putIfAbsent(uuid, new HashSet<>());
+        return playerRegions.get(uuid);
+    }
+    
     private Set<ProtectedRegion> getRegions(UUID u)
     {
         Player p = Bukkit.getPlayer(u);
@@ -39,7 +52,6 @@ public class Listeners implements Listener {
             return new HashSet<>();
     
         Location l = BukkitAdapter.adapt(p.getLocation());
-        World w = BukkitAdapter.adapt(p.getLocation().getWorld());
         
         RegionQuery q = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery();
         ApplicableRegionSet ars = q.getApplicableRegions(l);

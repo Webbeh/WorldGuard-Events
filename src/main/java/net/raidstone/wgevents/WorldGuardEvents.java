@@ -1,21 +1,33 @@
 package net.raidstone.wgevents;
 
 import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 /**
  * @author weby@we-bb.com [Nicolas Glassey]
- * @version 1.14.4-R0
  * @since 2/24/19
  */
 public class WorldGuardEvents extends JavaPlugin implements Listener {
     Listeners listeners = null;
     public void onEnable() {
-        String version = Bukkit.getPluginManager().getPlugin("WorldGuard").getDescription().getVersion();
+        Plugin p = Bukkit.getPluginManager().getPlugin("WorldGuard");
+        if(p==null)
+        {
+            Bukkit.getLogger().severe("[WorldGuardEvents] WorldGuard wasn't found. Disabling WorldGuardEvents.");
+            return;
+        }
+        String version = p.getDescription().getVersion();
         
-        if(version == null || version.isEmpty()) {
+        if(version.isEmpty()) {
             Bukkit.getLogger().severe("[WorldGuardEvents] WorldGuard's version not detected. Are you sure it's installed properly ?");
             Bukkit.getLogger().severe("[WorldGuardEvents] Disabling WorldGuardEvents.");
             return;
@@ -35,6 +47,51 @@ public class WorldGuardEvents extends JavaPlugin implements Listener {
             Bukkit.getLogger().severe("[WorldGuardEvents] Could not register the entry handler !");
             Bukkit.getLogger().severe("[WorldGuardEvents] Please report this error. The plugin will now be disabled.");
         }
-        
+    }
+   
+    /**
+     * Gets the regions a player is currently in.
+     * @param uuid UUID of the player in question.
+     * @return Set of WorldGuard protected regions that the player is currently in.
+     */
+    private Set<ProtectedRegion> getRegions(UUID uuid)
+    {
+        return listeners.getPlayerRegions(uuid);
+    }
+    
+    /**
+     * Gets the regions names a player is currently in.
+     * @param uuid UUID of the player in question.
+     * @return Set of Strings with the names of the regions the player is currently in.
+     */
+    public Set<String> getRegionsNames(UUID uuid)
+    {
+        return getRegions(uuid).stream().map(ProtectedRegion::getId).collect(Collectors.toSet());
+    }
+    
+    /**
+     * Checks whether a player is in one or several regions
+     * @param uuid UUID of the player in question.
+     * @param name List of regions to check.
+     * @return True if the player is in the named region.
+     */
+    public boolean isPlayerInRegion(UUID uuid, String... name)
+    {
+        Set<ProtectedRegion> regions = listeners.getPlayerRegions(uuid);
+       
+        if(regions.size()==0) return false;
+    
+        for(ProtectedRegion region : regions)
+        {
+            AtomicBoolean foundThisRegion= new AtomicBoolean(false);
+            for(String n : name)
+            {
+                if(region.getId().equalsIgnoreCase(n))
+                    foundThisRegion.set(true);
+            }
+            if(!foundThisRegion.get())
+                return false;
+        }
+        return true;
     }
 }
