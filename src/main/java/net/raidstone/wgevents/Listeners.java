@@ -1,38 +1,18 @@
 package net.raidstone.wgevents;
 
-import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.util.Location;
-import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.protection.ApplicableRegionSet;
-import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import com.sk89q.worldguard.protection.regions.RegionContainer;
-import com.sk89q.worldguard.protection.regions.RegionQuery;
-import net.raidstone.wgevents.events.RegionEnteredEvent;
-import net.raidstone.wgevents.events.RegionLeftEvent;
-import net.raidstone.wgevents.events.RegionsEnteredEvent;
-import net.raidstone.wgevents.events.RegionsLeftEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.*;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * @author weby@we-bb.com [Nicolas Glassey]
  * @since 2/24/19
  */
 public class Listeners implements Listener {
-    private RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+    /*
+    private final RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
     
-    private HashMap<UUID, Set<ProtectedRegion>> playerRegions = new HashMap<>();
+    private final HashMap<UUID, Set<ProtectedRegion>> playerRegions = new HashMap<>();
     
-    public  HashMap<UUID, Set<ProtectedRegion>> getPlayerRegions()
+    public HashMap<UUID, Set<ProtectedRegion>> getPlayerRegions()
     {
         return playerRegions;
     }
@@ -48,20 +28,26 @@ public class Listeners implements Listener {
         Player p = Bukkit.getPlayer(u);
     
         //If player is offline
-        if (p == null)
+        if (p == null || !p.isOnline())
             return new HashSet<>();
     
         Location l = BukkitAdapter.adapt(p.getLocation());
         
-        RegionQuery q = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery();
+        RegionQuery q = container.createQuery();
         ApplicableRegionSet ars = q.getApplicableRegions(l);
         return ars.getRegions();
     }
     
-    void changeRegions(UUID u, Set<ProtectedRegion> actual)
+    void changeRegions(UUID u, Set<ProtectedRegion> actual, Set<ProtectedRegion> previous)
     {
     
+    }
+    
+    void changeRegions(UUID u, Set<ProtectedRegion> actual)
+    {
         playerRegions.putIfAbsent(u, new HashSet<>());
+        changeRegions(u, actual, playerRegions.get(u));
+        
         //If the sets contain the same info, ignore.
         int previousSize = playerRegions.get(u).size();
         int actualSize = actual.size();
@@ -109,6 +95,7 @@ public class Listeners implements Listener {
     
         //Apply the changes
         playerRegions.put(u, actual);
+        
     }
     
     private void quit(UUID u)
@@ -159,4 +146,6 @@ public class Listeners implements Listener {
     {
         changeWorld(event.getPlayer().getUniqueId());
     }
+    
+     */
 }
