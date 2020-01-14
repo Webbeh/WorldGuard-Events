@@ -44,15 +44,31 @@ public class Entry extends Handler implements Listener {
     @Override
     public boolean onCrossBoundary(LocalPlayer player, Location from, Location to, ApplicableRegionSet toSet, Set<ProtectedRegion> entered, Set<ProtectedRegion> left, MoveType moveType)
     {
-        pm.callEvent(new RegionsChangedEvent(player.getUniqueId(), left, entered));
-        pm.callEvent(new RegionsEnteredEvent(player.getUniqueId(), entered));
-        pm.callEvent(new RegionsLeftEvent(player.getUniqueId(), left));
-        for(ProtectedRegion r : entered)
-            pm.callEvent(new RegionEnteredEvent(player.getUniqueId(), r));
-        for(ProtectedRegion r : left)
-            pm.callEvent(new RegionLeftEvent(player.getUniqueId(), r));
+        boolean ret = true;
+        RegionsChangedEvent rce = new RegionsChangedEvent(player.getUniqueId(), left, entered);
+        RegionsEnteredEvent ree = new RegionsEnteredEvent(player.getUniqueId(), entered);
+        RegionsLeftEvent rle = new RegionsLeftEvent(player.getUniqueId(), left);
+    
+        pm.callEvent(rce);
+        pm.callEvent(ree);
+        pm.callEvent(rle);
+       
+        if(rce.isCancelled()) ret=false;
+        if(ree.isCancelled()) ret=false;
+        if(rle.isCancelled()) ret=false;
+        
+        for(ProtectedRegion r : entered) {
+            RegionEnteredEvent regentered = new RegionEnteredEvent(player.getUniqueId(), r);
+            pm.callEvent(regentered);
+            if(regentered.isCancelled()) ret=false;
+        }
+        for(ProtectedRegion r : left) {
+            RegionLeftEvent regleft = new RegionLeftEvent(player.getUniqueId(), r);
+            pm.callEvent(regleft);
+            if(regleft.isCancelled()) ret=false;
+        }
 //        listeners.changeRegions(player.getUniqueId(), entered, left);
-        return true;
+        return ret;
     }
     
     
