@@ -57,7 +57,7 @@ This plugin is located in the Maven Central repository, so you simply need to ad
 <dependency>
     <groupId>net.raidstone</groupId>
     <artifactId>WorldGuardEvents</artifactId>
-    <version>1.14.4-R0</version>
+    <version>1.15.1</version>
     <scope>provided</scope>
 </dependency>
 ```
