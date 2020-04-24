@@ -46,7 +46,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Set;
 
-public class TestPLugin extends JavaPlugin implements Listener {
+public class TestPlugin extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
