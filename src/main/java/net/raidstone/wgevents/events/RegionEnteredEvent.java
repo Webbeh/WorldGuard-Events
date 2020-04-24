@@ -45,6 +45,7 @@ public class RegionEnteredEvent extends Event implements Cancellable {
         return handlers;
     }
     
+    @NotNull
     public HandlerList getHandlers() {
         return handlers;
     }

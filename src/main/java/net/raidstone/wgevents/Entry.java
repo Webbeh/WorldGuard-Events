@@ -24,17 +24,12 @@ public class Entry extends Handler implements Listener {
     
     public final PluginManager pm = Bukkit.getPluginManager();
     public static final Factory factory = new Factory();
-//    private static Listeners listeners;
+    
     public static class Factory extends Handler.Factory<Entry> {
         @Override
         public Entry create(Session session) {
             return new Entry(session);
         }
-    }
-    
-    public static void setListeners(Listeners listeners)
-    {
-//        Entry.listeners = listeners;
     }
     
     public Entry(Session session) {
@@ -44,31 +39,31 @@ public class Entry extends Handler implements Listener {
     @Override
     public boolean onCrossBoundary(LocalPlayer player, Location from, Location to, ApplicableRegionSet toSet, Set<ProtectedRegion> entered, Set<ProtectedRegion> left, MoveType moveType)
     {
-        boolean ret = true;
         RegionsChangedEvent rce = new RegionsChangedEvent(player.getUniqueId(), left, entered);
-        RegionsEnteredEvent ree = new RegionsEnteredEvent(player.getUniqueId(), entered);
-        RegionsLeftEvent rle = new RegionsLeftEvent(player.getUniqueId(), left);
-    
         pm.callEvent(rce);
+        if(rce.isCancelled()) return false;
+        
+        RegionsEnteredEvent ree = new RegionsEnteredEvent(player.getUniqueId(), entered);
         pm.callEvent(ree);
+        if(ree.isCancelled()) return false;
+        
+        RegionsLeftEvent rle = new RegionsLeftEvent(player.getUniqueId(), left);
         pm.callEvent(rle);
-       
-        if(rce.isCancelled()) ret=false;
-        if(ree.isCancelled()) ret=false;
-        if(rle.isCancelled()) ret=false;
+        if(rle.isCancelled()) return false;
         
         for(ProtectedRegion r : entered) {
             RegionEnteredEvent regentered = new RegionEnteredEvent(player.getUniqueId(), r);
             pm.callEvent(regentered);
-            if(regentered.isCancelled()) ret=false;
+            if(regentered.isCancelled()) return false;
         }
+    
+    
         for(ProtectedRegion r : left) {
             RegionLeftEvent regleft = new RegionLeftEvent(player.getUniqueId(), r);
             pm.callEvent(regleft);
-            if(regleft.isCancelled()) ret=false;
+            if(regleft.isCancelled()) return false;
         }
-//        listeners.changeRegions(player.getUniqueId(), entered, left);
-        return ret;
+        return true;
     }
     
     
