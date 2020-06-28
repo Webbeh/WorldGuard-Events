@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 /**
- * @author weby@we-bb.com [Nicolas Glassey]
+ * @author Weby & Anrza (info@raidstone.net)
  * @version 1.0.0
  * @since 2/24/19
  */
