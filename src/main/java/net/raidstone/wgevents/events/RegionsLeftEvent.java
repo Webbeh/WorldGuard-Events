@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * @author Weby & Anrza (info@raidstone.net)
+ * @author Weby &amp; Anrza (info@raidstone.net)
  * @version 1.0.0
  * @since 2/24/19
  */

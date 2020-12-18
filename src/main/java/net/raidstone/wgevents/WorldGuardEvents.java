@@ -22,7 +22,7 @@ import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 /**
- * @author Weby & Anrza (info@raidstone.net)
+ * @author Weby &amp; Anrza (info@raidstone.net)
  * @since 2/24/19
  */
 public class WorldGuardEvents extends JavaPlugin implements Listener {

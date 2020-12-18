@@ -16,7 +16,7 @@ import java.util.Set;
 
 
 /**
- * @author Weby & Anrza (info@raidstone.net)
+ * @author Weby &amp; Anrza (info@raidstone.net)
  * @version 1.0.0
  * @since 3/3/19
  */
