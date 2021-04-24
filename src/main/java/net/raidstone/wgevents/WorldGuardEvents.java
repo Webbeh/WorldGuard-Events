@@ -115,7 +115,8 @@ public class WorldGuardEvents extends JavaPlugin implements Listener {
     public static boolean isPlayerInAllRegions(UUID playerUUID, Set<String> regionNames)
     {
         Set<String> regions = getRegionsNames(playerUUID);
-        if(regions.isEmpty()) throw new IllegalArgumentException("You need to check for at least one region !");
+        if(regionNames.isEmpty()) throw new IllegalArgumentException("You need to check for at least one region !");
+        if(regions.isEmpty()) return false;
         
         return regions.containsAll(regionNames.stream().map(String::toLowerCase).collect(Collectors.toSet()));
     }
@@ -130,7 +131,9 @@ public class WorldGuardEvents extends JavaPlugin implements Listener {
     public static boolean isPlayerInAnyRegion(UUID playerUUID, Set<String> regionNames)
     {
         Set<String> regions = getRegionsNames(playerUUID);
-        if(regions.isEmpty()) throw new IllegalArgumentException("You need to check for at least one region !");
+        if(regionNames.isEmpty()) throw new IllegalArgumentException("You need to check for at least one region !");
+        if(regions.isEmpty()) return false;
+        
         for(String region : regionNames)
         {
             if(regions.contains(region.toLowerCase()))
