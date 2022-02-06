@@ -99,7 +99,7 @@ This plugin is located in the Maven Central repository, so you simply need to ad
 <dependency>
     <groupId>net.raidstone</groupId>
     <artifactId>WorldGuardEvents</artifactId>
-    <version>1.16.4</version>
+    <version>1.18.1</version>
     <scope>provided</scope>
 </dependency>
 ```
