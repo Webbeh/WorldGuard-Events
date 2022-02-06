@@ -115,7 +115,7 @@
         </repository>
         <repository>
             <id>sk89q-repo</id>
-            <url>https://maven.sk89q.com/repo/</url>
+            <url>https://maven.enginehub.org/repo/</url>
         </repository>
     </repositories>
 
@@ -138,7 +138,7 @@
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>
             <artifactId>worldguard-core</artifactId>
-            <version>7.0.5-SNAPSHOT</version>
+            <version>7.0.6-SNAPSHOT</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
