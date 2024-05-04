@@ -1,4 +1,10 @@
 # WorldGuard Events
+
+## This project is abandoned.
+It has still been tested to work on every version from 1.15 to 1.20.5, and will probably work for the forseeable future, but no update or fix will be made.
+
+You are very welcome to fork it, or to take over the repo if you are serious enough.
+
 ## For server admins
 
 This plugin may be required by some other plugins. If so, simply drop the JAR in the **plugins** folder of your server, reload it, and you're set.
